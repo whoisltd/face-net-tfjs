@@ -11,7 +11,7 @@
   "dependencies": {
     "@tensorflow/tfjs": "^3.18.0",
     "@tensorflow/tfjs-node": "^3.18.0",
-    "mtcnn-tfjs": "^1.0.3",
+    "@whoisltd/mtcnn-tfjs": "^1.0.2",
     "node-fetch": "^2.6.7",
     "sharp": "^0.30.6"
   }
