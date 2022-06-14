@@ -1,0 +1,18 @@
+{
+  "name": "face-net-tfjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "whoisltd (Dat Le)",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.18.0",
+    "@tensorflow/tfjs-node": "^3.18.0",
+    "mtcnn-tfjs": "^1.0.3",
+    "node-fetch": "^2.6.7",
+    "sharp": "^0.30.6"
+  }
+}
