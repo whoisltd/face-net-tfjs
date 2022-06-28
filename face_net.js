@@ -1,10 +1,10 @@
 const tf = require('@tensorflow/tfjs-node')
 const MTCNN = require('@whoisltd/mtcnn-tfjs')
 
-const facenet_url = 'file:///home/whoisltd/works/jits-ai-backend/api/services/func_ml/face_verification/models/facenet/model.json'
-const pnet_url = 'file:///home/whoisltd/works/jits-ai-backend/api/services/func_ml/face_verification/models/pnet/model.json'
-const rnet_url = 'file:///home/whoisltd/works/jits-ai-backend/api/services/func_ml/face_verification/models/rnet/model.json'
-const onet_url = 'file:///home/whoisltd/works/jits-ai-backend/api/services/func_ml/face_verification/models/onet/model.json'
+const facenet_url = 'https://digitalwallet-poc-storage-s3.s3.ap-southeast-1.amazonaws.com/ai_temp/facenet512_model/model.json'
+const pnet_url = 'https://digitalwallet-poc-storage-s3.s3.ap-southeast-1.amazonaws.com/ai_temp/mtcnn/pnet/model.json'
+const rnet_url = 'https://digitalwallet-poc-storage-s3.s3.ap-southeast-1.amazonaws.com/ai_temp/mtcnn/rnet/model.json'
+const onet_url = 'https://digitalwallet-poc-storage-s3.s3.ap-southeast-1.amazonaws.com/ai_temp/mtcnn/onet/model.json'
 
 class Lambda extends tf.layers.Layer {
     static className = 'Lambda'
@@ -95,12 +95,12 @@ class FaceNet{
     }
 
     async run(){
-        var url1 = '/home/whoisltd/works/face-comparison/dat3.JPG'
-        var url2 = "/home/whoisltd/works/face-comparison/ben2.jpg"
+        var url1 = '/home/whoisltd/works/jits-ai-backend/assets/images/8.jpg'
+        var url2 = "/home/whoisltd/works/jits-ai-backend/assets/images/8.jpg"
 
         var img1 = await this.mtcnn.crop_face(url1)
         var img2 = await this.mtcnn.crop_face(url2)
-        
+        console.time('test')
         const a = await this.img_to_endcoding(img1)
         const b = await this.img_to_endcoding(img2)
 
@@ -109,17 +109,25 @@ class FaceNet{
         var conf = this.face_distance_to_conf(dist.dataSync()[0], 1.05)
         if(dist.dataSync()[0] >=1.05){
             console.log('These images are of two different people! Probability:', conf)
+            console.timeEnd('test')
         }
         else{
             console.log('These images are of the same people! Probability:', conf)
+            console.timeEnd('test')
         }
         
         
     }
 }
 
-facenet = new FaceNet(pnet_url, rnet_url, onet_url, facenet_url)
-facenet.run()
+async function test(){
+    facenet = new FaceNet(pnet_url, rnet_url, onet_url, facenet_url)
+    facenet.mtcnn
+    console.log()
+    facenet.run()
+}
+
+test()
 
 // test runtime of facenet
 
